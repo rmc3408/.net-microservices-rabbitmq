@@ -18,7 +18,7 @@ namespace catalog.API.Repositories
         {
             return await this._mongoContext.Products.Find(p => true).ToListAsync<Product>();
         }
-        public async Task<Product> GetProduct(string id)
+        public async Task<Product> GetProductById(string id)
         {
             var builder = Builders<Product>.Filter;
             FilterDefinition<Product> filter = builder.ElemMatch(product => product.Id, id);
@@ -30,17 +30,10 @@ namespace catalog.API.Repositories
             var filter = builder.Eq(product => product.Category, category);
             return await this._mongoContext.Products.Find(filter).ToListAsync();
         }
-        public async Task<IEnumerable<Product>> GetProductsByName(string name)
-        {
-            var builder = Builders<Product>.Filter;
-            var filter = builder.Eq(product => product.Name, name);
-            return await this._mongoContext.Products.Find(filter).ToListAsync();
-        }
         public async Task CreateProduct(Product product)
         {
             await this._mongoContext.Products.InsertOneAsync(product);
         }
-
         public async Task<bool> DeleteProduct(string id)
         {
             var builder = Builders<Product>.Filter;

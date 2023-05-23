@@ -1,6 +1,7 @@
 ﻿using catalog.API.Entities;
 using catalog.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,47 +11,71 @@ namespace catalog.API.Controllers
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductRepository _mongoServiceRepo;
         private readonly ILogger<CatalogController> _logger;
 
         public CatalogController(IProductRepository productRepository, ILogger<CatalogController> logger)
         {
-            _productRepository = productRepository;
+            _mongoServiceRepo = productRepository;
             _logger = logger;
         }
 
         // GET: api/<catalogController>
         [HttpGet]
-
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var listProduct = await _productRepository.GetProducts();
-            return listProduct;
+            var listProduct = await _mongoServiceRepo.GetProducts();
+            return listProduct == null ? NotFound() : Ok(listProduct);
         }
 
-        // GET api/<catalogController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id:length(24)}", Name = "GetProductById")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        public async Task<ActionResult<Product>> GetProductById(string id)
         {
-            return "value";
+            var product = await _mongoServiceRepo.GetProductById(id);
+            if (product == null)
+            {
+                _logger.LogError($"Product with id: {id}, not found.");
+                return NotFound();
+            }
+            return Ok(product);
+        }
+
+        [Route("[action]/{category}", Name = "GetProductsByCategory")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string category)
+        {
+            var products = await _mongoServiceRepo.GetProductsByCategory(category);
+            return Ok(products);
         }
 
         // POST api/<catalogController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
+            await _mongoServiceRepo.CreateProduct(product);
+            return CreatedAtRoute("GetProductById", new { id = product.Id }, product);
         }
 
-        // PUT api/<catalogController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
+            var result = await _mongoServiceRepo.UpdateProduct(product);
+            return Ok(result);
         }
 
-        // DELETE api/<catalogController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id:length(24)}", Name = "DeleteProduct")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        public async Task<IActionResult> DeleteProductById(string id)
         {
+            var result = await _mongoServiceRepo.DeleteProduct(id);
+            return Ok(result);
         }
     }
 }
