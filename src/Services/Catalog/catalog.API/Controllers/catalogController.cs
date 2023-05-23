@@ -7,7 +7,7 @@ using System.Net;
 
 namespace catalog.API.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class CatalogController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace catalog.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/<catalogController>
+        // GET: /
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,6 +30,8 @@ namespace catalog.API.Controllers
             return listProduct == null ? NotFound() : Ok(listProduct);
         }
 
+
+        // GET: /{id}
         [HttpGet("{id:length(24)}", Name = "GetProductById")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
@@ -44,10 +46,11 @@ namespace catalog.API.Controllers
             return Ok(product);
         }
 
+        // GET: 
         [Route("[action]/{category}", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductByCategory(string category)
+        public async Task<ActionResult<IEnumerable<Product>>> GetCategory(string category)
         {
             var products = await _mongoServiceRepo.GetProductsByCategory(category);
             return Ok(products);
