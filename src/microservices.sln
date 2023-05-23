@@ -6,8 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3C2FEDDB-C0A1-48E6-A571-63AC1C323242}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{DF6B8626-CABE-44CD-9255-2397862753E6}"
+	ProjectSection(SolutionItems) = preProject
+		Services\Catalog\catalog.API\mongo commands.md = Services\Catalog\catalog.API\mongo commands.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catalog.API", "Services\Catalog\catalog.API\catalog.API.csproj", "{5556C1C6-B7FC-4E08-8983-8252643E9452}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catalog.API", "Services\Catalog\catalog.API\catalog.API.csproj", "{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,17 +18,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5556C1C6-B7FC-4E08-8983-8252643E9452}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5556C1C6-B7FC-4E08-8983-8252643E9452}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5556C1C6-B7FC-4E08-8983-8252643E9452}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5556C1C6-B7FC-4E08-8983-8252643E9452}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DF6B8626-CABE-44CD-9255-2397862753E6} = {3C2FEDDB-C0A1-48E6-A571-63AC1C323242}
-		{5556C1C6-B7FC-4E08-8983-8252643E9452} = {DF6B8626-CABE-44CD-9255-2397862753E6}
+		{EF55FF30-4D1D-45AA-AA0C-EFDEF64BA816} = {DF6B8626-CABE-44CD-9255-2397862753E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {099B7D8B-9AA4-48BA-9FFB-A224BC0DC17E}
