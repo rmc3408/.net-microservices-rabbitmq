@@ -1,4 +1,5 @@
 version: '3.4'
+name: docker-microservices
 
 services:
   catalog.database:
@@ -10,7 +11,7 @@ services:
       - "./Databases/Catalog:/data/db"
 
   catalog.api:
-    container_name: catalog.api
+    container_name: catalog-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionStrings=mongodb://catalog-mongo:27017"

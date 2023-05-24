@@ -3,8 +3,12 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "catalog.api",
+      "composeLaunchUrl": "{Scheme}://localhost:8001/swagger",
       "serviceActions": {
-        "catalog.api": "StartDebugging"
+        "catalog.api": "StartDebugging",
+        "catalog.database": "StartDebugging"
       }
     }
   }

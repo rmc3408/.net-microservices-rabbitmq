@@ -1,0 +1,10 @@
+Close all dockers and run with below command on that location;
+
+UP
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+DOWN
+docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+
+BUILD
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build
