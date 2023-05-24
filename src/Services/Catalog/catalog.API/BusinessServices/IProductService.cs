@@ -1,8 +1,8 @@
 ﻿using catalog.API.Entities;
 
-namespace catalog.API.Repositories
+namespace catalog.API.BusinessServices
 {
-    public interface IProductRepository
+    public interface IProductService
     {
         Task<IEnumerable<Product>> GetProducts();
         Task<Product> GetProductById(string id);

@@ -1,8 +1,8 @@
 ﻿using catalog.API.Entities;
 using MongoDB.Driver;
-using System.Xml.Linq;
 
-namespace catalog.API.Data
+
+namespace catalog.API.Database
 {
     public class SeedProductData
     {

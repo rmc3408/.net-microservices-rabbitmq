@@ -1,5 +1,5 @@
 ﻿using catalog.API.Entities;
-using catalog.API.Repositories;
+using catalog.API.BusinessServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -9,12 +9,12 @@ namespace catalog.API.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class CatalogController : ControllerBase
+    public class Controller : ControllerBase
     {
-        private readonly IProductRepository _mongoServiceRepo;
-        private readonly ILogger<CatalogController> _logger;
+        private readonly IProductService _mongoServiceRepo;
+        private readonly ILogger<Controller> _logger;
 
-        public CatalogController(IProductRepository productRepository, ILogger<CatalogController> logger)
+        public Controller(IProductService productRepository, ILogger<Controller> logger)
         {
             _mongoServiceRepo = productRepository;
             _logger = logger;
@@ -58,7 +58,7 @@ namespace catalog.API.Controllers
 
         // POST api/<catalogController>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IEnumerable<Product>))]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
             await _mongoServiceRepo.CreateProduct(product);

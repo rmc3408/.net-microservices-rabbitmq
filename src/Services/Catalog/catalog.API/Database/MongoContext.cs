@@ -1,15 +1,15 @@
 ﻿using catalog.API.Entities;
 using MongoDB.Driver;
 
-namespace catalog.API.Data
+namespace catalog.API.Database
 {
-    public class CatalogContext : ICatalogContext
+    public class MongoContext : IMongoContext
     {
         private MongoClient _client;
         public IMongoCollection<Product> Products { get; }
 
-        // From Dep Injection
-        public CatalogContext(IConfiguration config)
+        // From Dependency Injection, automatic
+        public MongoContext(IConfiguration config)
         {
             string collectionName = config.GetValue<string>("DatabaseSettings:CollectionName");
             string databaseName = config.GetValue<string>("DatabaseSettings:DatabaseName");

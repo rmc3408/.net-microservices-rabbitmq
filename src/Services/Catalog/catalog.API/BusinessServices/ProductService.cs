@@ -1,15 +1,14 @@
-﻿using catalog.API.Data;
-using catalog.API.Entities;
+﻿using catalog.API.Entities;
+using catalog.API.Database;
 using MongoDB.Driver;
-using System.Xml.Linq;
 
-namespace catalog.API.Repositories
+namespace catalog.API.BusinessServices
 {
-    public class ProductRepository : IProductRepository
+    public class ProductService : IProductService
     {
-        private readonly ICatalogContext _mongoContext;
+        private readonly IMongoContext _mongoContext;
 
-        public ProductRepository(ICatalogContext products)
+        public ProductService(IMongoContext products)
         {
             this._mongoContext = products ?? throw new ArgumentNullException(nameof(products));
         }
@@ -21,7 +20,7 @@ namespace catalog.API.Repositories
         public async Task<Product> GetProductById(string id)
         {
             var builder = Builders<Product>.Filter;
-            FilterDefinition<Product> filter = builder.ElemMatch(product => product.Id, id);
+            FilterDefinition<Product> filter = builder.Eq(product => product.Id, id);
             return await this._mongoContext.Products.Find(filter).FirstOrDefaultAsync<Product>();
         }
         public async Task<IEnumerable<Product>> GetProductsByCategory(string category)
