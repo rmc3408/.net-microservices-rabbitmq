@@ -10,6 +10,9 @@ services:
       context: .
       dockerfile: Services/Catalog/catalog.API/Dockerfile
 
+  basket.database:
+    image: redis:alpine
+
 networks:
   default:
     name: microservices-net  

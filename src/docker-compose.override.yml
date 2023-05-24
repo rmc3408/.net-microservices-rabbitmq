@@ -20,3 +20,13 @@ services:
     ports:
       - 8001:80
 
+  basket.database:
+    container_name: basket-redis
+    restart: always
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - "./Databases/Basket:/data"
+

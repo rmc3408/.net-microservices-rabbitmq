@@ -1,0 +1,13 @@
+
+Inside docket, run 
+
+redis-cli
+
+ping  //Output: PONG
+
+set [key] "value"
+get [key]
+
+-->
+set name mehmet
+get name
