@@ -2,5 +2,6 @@
 {
     public class RedisContext : IRedisContext
     {
+        //No need because is cache and simple.
     }
 }
