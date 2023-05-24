@@ -9,12 +9,12 @@ namespace catalog.API.Controllers
 {
     [Route("/[controller]")]
     [ApiController]
-    public class Controller : ControllerBase
+    public class CatalogController : ControllerBase
     {
         private readonly IProductService _mongoServiceRepo;
-        private readonly ILogger<Controller> _logger;
+        private readonly ILogger<CatalogController> _logger;
 
-        public Controller(IProductService productRepository, ILogger<Controller> logger)
+        public CatalogController(IProductService productRepository, ILogger<CatalogController> logger)
         {
             _mongoServiceRepo = productRepository;
             _logger = logger;
@@ -29,7 +29,6 @@ namespace catalog.API.Controllers
             var listProduct = await _mongoServiceRepo.GetProducts();
             return listProduct == null ? NotFound() : Ok(listProduct);
         }
-
 
         // GET: /{id}
         [HttpGet("{id:length(24)}", Name = "GetProductById")]
@@ -46,7 +45,7 @@ namespace catalog.API.Controllers
             return Ok(product);
         }
 
-        // GET: 
+        // GET: GetCategory/{category}
         [Route("[action]/{category}", Name = "GetProductsByCategory")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -56,7 +55,7 @@ namespace catalog.API.Controllers
             return Ok(products);
         }
 
-        // POST api/<catalogController>
+        // POST /
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IEnumerable<Product>))]
         public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
@@ -65,6 +64,7 @@ namespace catalog.API.Controllers
             return CreatedAtRoute("GetProductById", new { id = product.Id }, product);
         }
 
+        // PUT /
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
@@ -73,6 +73,7 @@ namespace catalog.API.Controllers
             return Ok(result);
         }
 
+        // DELETE /{id}
         [HttpDelete("{id:length(24)}", Name = "DeleteProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         public async Task<IActionResult> DeleteProductById(string id)
