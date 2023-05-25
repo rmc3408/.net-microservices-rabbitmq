@@ -10,16 +10,6 @@ services:
     volumes:
       - "./Databases/Catalog:/data/db"
 
-  catalog.api:
-    container_name: catalog-api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionStrings=mongodb://catalog-mongo:27017"
-    depends_on:
-      - catalog.database
-    ports:
-      - 8001:80
-
   basket.database:
     container_name: basket-redis
     restart: always
@@ -30,3 +20,22 @@ services:
     volumes:
       - "./Databases/Basket:/data"
 
+  catalog.api:
+    container_name: catalog-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionStrings=mongodb://catalog-mongo:27017"
+    depends_on:
+      - catalog.database
+    ports:
+      - 8001:80
+
+  basket.api:
+    container_name: basket-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "RedisCacheUrl=basket-redis:6379"
+    depends_on:
+      - basket.database
+    ports:
+      - 8002:80

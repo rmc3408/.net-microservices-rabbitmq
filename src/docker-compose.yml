@@ -10,6 +10,12 @@ services:
       context: .
       dockerfile: Services/Catalog/catalog.API/Dockerfile
 
+  basket.api:
+    image: basket.api
+    build:
+      context: .
+      dockerfile: Services/Basket/basket.API/Dockerfile
+
   basket.database:
     image: redis:alpine
 
